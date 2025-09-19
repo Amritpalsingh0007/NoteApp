@@ -4,6 +4,7 @@ import express from 'express';
 import authRoutes from './routes/auth.js';
 import noteRoutes from './routes/note.js';
 import membershipRoutes from './routes/membership.js'
+import resetRoute from './routes/reset.js'
 import cors from 'cors';
 
 const app = express();
@@ -21,10 +22,14 @@ app.use(express.json());
 app.use("/auth/v1/", authRoutes);
 app.use("/notes", noteRoutes);
 app.use('', membershipRoutes);
+//Reset Route
+app.use("/reset", resetRoute);
 
 app.get('/health',(req, res)=>{
     res.status(200).json({status:"ok"})
 });
+
+
 
 app.listen(PORT || 3000, ()=>
 console.log(`server started at port ${PORT || 3000}`));
