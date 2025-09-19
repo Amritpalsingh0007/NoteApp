@@ -34,7 +34,14 @@ function EditNote({editNote, setPageState}:{editNote:{ _id: string; title: strin
                 if(res.code===403){
                     alert(res.data?.message || "Unable to update Note!")
                 }
+                if(res.code === 404){
+                    alert("Cannot Update Note Not Found!")
+                }else{
+                    alert("Unable to update Note!");
+                    
+                }
                 setDisable(false);
+                setPageState("none");
                 
             }).catch((error)=>{
                 alert("Unable to update Note! \n"+error.message);
@@ -51,9 +58,11 @@ function EditNote({editNote, setPageState}:{editNote:{ _id: string; title: strin
                 deleteNote(token, editNote._id).then((res)=>{
                     if(res.success && res.code===200){
                         alert("Note Deleted Successfully!");
-                        setPageState("none");
-                        setDisable(false);
+                    }else{
+                        alert("Deleted Failed! "+res.message);
                     }
+                    setPageState("none");
+                    setDisable(false);
                 }).catch((error)=>{
                     alert("Unable to delete note! \n"+error.message);
                     setPageState("none");

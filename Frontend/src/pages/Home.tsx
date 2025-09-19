@@ -24,8 +24,9 @@ function Home() {
       return;
     }
     getAllNotes(token).then((res) => {
-      if (!res.success) {
+      if (res.code !== 200) {
         alert("Unable to fetch data!");
+        return;
       }
       if (res.data?.notes) {
         setNote(

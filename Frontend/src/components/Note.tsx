@@ -29,6 +29,8 @@ function Note({title, content, _id, setPageState, setEditNote, refreshNotes}:pro
             if(res.success && res.code===200){
                 alert("Note Deleted Successfully!");
                 refreshNotes();
+            }else{
+                alert(`Delete unsuccessful! ${res.message}`);
             }
         setDisable(false);
 
