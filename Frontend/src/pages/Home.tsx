@@ -20,15 +20,13 @@ function Home() {
     content: string;
   } | null>(null);
   const fetchNotes = () => {
-    console.log(token);
     if (!token) {
       return;
     }
     getAllNotes(token).then((res) => {
       if (!res.success) {
-        console.log("Unable to fetch data!");
+        alert("Unable to fetch data!");
       }
-      console.log(res.data);
       if (res.data?.notes) {
         setNote(
           res.data.notes.map(

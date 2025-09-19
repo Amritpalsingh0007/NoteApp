@@ -15,10 +15,8 @@ export async function upgradeMembership(token:string, tenant_id:string) {
     return { success: response.ok, code: response.status, message: data.message, data };
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
       return { success: false, code: 0, message: error.message };
     } else {
-      console.log("Unknown error:", error);
       return { success: false, code: 0, message: "Unkown error" };
     }
   }

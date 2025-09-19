@@ -15,10 +15,8 @@ export async function getAllNotes(token:string) {
     return { success: response.ok, code: response.status, message: data.message, data };
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
       return { success: false, code: 0, message: error.message };
     } else {
-      console.log("Unknown error:", error);
       return { success: false, code: 0, message: "Unkown error" };
     }
   }
@@ -39,10 +37,8 @@ export async function getNote(token:string, id:string) {
     return { success: response.ok, code: response.status, message: data.message, data };
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
       return { success: false, code: 0, message: error.message };
     } else {
-      console.log("Unknown error:", error);
       return { success: false, code: 0, message: "Unkown error" };
     }
   }
@@ -68,10 +64,8 @@ export async function createNote(token:string, title: string, content: string) {
     return { success: response.ok, code: response.status, message: data.message, data };
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
       return { success: false, code: 0, message: error.message };
     } else {
-      console.log("Unknown error:", error);
       return { success: false, code: 0, message: "Unkown error" };
     }
   }
@@ -98,10 +92,8 @@ export async function updateNote(token:string, id:string, title: string, content
     return { success: response.ok, code: response.status, message: data.message, data };
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
       return { success: false, code: 0, message: error.message };
     } else {
-      console.log("Unknown error:", error);
       return { success: false, code: 0, message: "Unkown error" };
     }
   }
@@ -123,10 +115,8 @@ export async function deleteNote(token:string, id:string) {
     return { success: response.ok, code: response.status, message: data.message, data };
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
       return { success: false, code: 0, message: error.message };
     } else {
-      console.log("Unknown error:", error);
       return { success: false, code: 0, message: "Unkown error" };
     }
   }

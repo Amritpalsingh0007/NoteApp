@@ -5,10 +5,12 @@ import useUserContext from "../context/UserContext";
 function CreateNote({setPageState}:{setPageState:React.Dispatch<React.SetStateAction<"edit" | "create" | "upgrade"|"none">>}) {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [disable, setDisable] = useState(false);
     const {token} = useUserContext();
 
     function handleForm(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setDisable(true);
         if (title.trim() === "") {
             alert("Please enter a title");
             return;
@@ -32,9 +34,11 @@ function CreateNote({setPageState}:{setPageState:React.Dispatch<React.SetStateAc
             }else{
                 alert(res.data?.message||"unable to create note!");
             }
+            setDisable(false);
             setPageState("none");
         }).catch((error)=>{
             alert("Unable to create Note! \n"+error.message);
+            setDisable(true);
             setPageState("none");
         })
         
@@ -73,9 +77,38 @@ function CreateNote({setPageState}:{setPageState:React.Dispatch<React.SetStateAc
         />
         <button
           type="submit"
-          className="rounded-lg  bg-blue-700  p-2 font-bold text-white my-1"
+          disabled={disable}
+          className={`rounded-lg  ${
+            disable ? "bg-gray-500" : "bg-blue-700 hover:bg-blue-800"
+          } p-2 font-bold text-white my-1`}
         >
-          Create
+          {disable ? (
+            //Spinning Animation 
+            <span className="w-full h-full flex justify-center items-center">
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+            </span>
+          ) : (
+            "Create"
+          )}
         </button>
       </form>
     </div>

@@ -7,11 +7,12 @@ import useUserContext from "../context/UserContext";
 function EditNote({editNote, setPageState}:{editNote:{ _id: string; title: string; content: string } | null, setPageState:React.Dispatch<React.SetStateAction<"edit" | "create" | "upgrade"|"none">>}) {
     const [title, setTitle] = useState(editNote?.title);
         const [content, setContent] = useState(editNote?.content);
+        const [disable, setDisable] = useState(false);
         const {token} = useUserContext();
     
         function handleForm(e: React.FormEvent<HTMLFormElement>) {
             e.preventDefault();
-            console.log(title, content, editNote)
+            setDisable(true);
             if (!title || title.trim() === "") {
                 alert("Please enter a title");
                 return;
@@ -33,14 +34,17 @@ function EditNote({editNote, setPageState}:{editNote:{ _id: string; title: strin
                 if(res.code===403){
                     alert(res.data?.message || "Unable to update Note!")
                 }
+                setDisable(false);
                 
             }).catch((error)=>{
                 alert("Unable to update Note! \n"+error.message);
                 setPageState("none");
+        setDisable(false);
             })
             
         }
         const remove = ()=>{
+            setDisable(true);
                 if(!token || !editNote){
                     return;
                 }
@@ -48,11 +52,14 @@ function EditNote({editNote, setPageState}:{editNote:{ _id: string; title: strin
                     if(res.success && res.code===200){
                         alert("Note Deleted Successfully!");
                         setPageState("none");
+                        setDisable(false);
                     }
                 }).catch((error)=>{
                     alert("Unable to delete note! \n"+error.message);
                     setPageState("none");
+                    setDisable(false);
                 });
+                
             }
     useEffect(()=>{
         if(!editNote){
@@ -94,13 +101,15 @@ function EditNote({editNote, setPageState}:{editNote:{ _id: string; title: strin
         />
         <button
           type="submit"
-          className="rounded-lg  bg-blue-700  p-2 font-bold text-white my-1"
+          disabled={disable}
+          className={`rounded-lg ${disable ? "bg-gray-500" : "bg-blue-700 hover:bg-blue-800"}  p-2 font-bold text-white my-1`}
         >
           Update
         </button>
         <button
           onClick={remove}
-          className="rounded-lg  bg-red-700  p-2 font-bold text-white my-1"
+          disabled={disable}
+          className={`rounded-lg ${disable ? "bg-gray-500" : "bg-red-700 hover:bg-red-800"} p-2 font-bold text-white my-1`}
         >
           Delete
         </button>
